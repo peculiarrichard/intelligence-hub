@@ -72,24 +72,10 @@ await task_module.register()
 ### Event-Driven Communication Pattern
 
 **Core Principle:** Modules never call each other directly. All communication happens through the event bus.
-```python
-# Example: Task Module publishing an event
-event = IntelligenceEvent(
-    event_type=EventType.TASK_CREATED,
-    source_module=self.module_id,
-    payload=task_data
-)
-await self.event_bus.publish(event)
-```
 
 ### Event Subscription Model
-
 Each module subscribes to relevant event types:
-```python
-def _setup_event_handlers(self):
-    self.event_bus.subscribe(EventType.TASK_CREATED, self._handle_task_created)
-    self.event_bus.subscribe(EventType.INTELLIGENCE_RESPONSE, self._handle_intelligence_response)
-```
+
 
 ### Intelligence Orchestration
 
@@ -121,15 +107,6 @@ The Core Service provides intelligent routing:
 - All breaking changes require a new version (v2, v3, etc.)
 - Previous versions maintained during deprecation period
 - Semantic versioning for module capabilities
-
-### Module Versioning
-```python
-ModuleRegistration(
-    name="Task Intelligence Engine",
-    version="1.2.0",  # Semantic versioning
-    capabilities=["task_management", "prioritization"]
-)
-```
 
 ### Scalability Strategy
 
@@ -197,16 +174,9 @@ uvicorn src.main:app --reload --host 0.0.0.0 --port 8000
 
 ### Docker Deployment
 
-**Using Docker Compose (Recommended)**
+**Using Docker Compose**
 ```bash
 docker-compose up -d
-```
-
-### Testing the System
-
-Run the test client to see the event flow in action:
-```bash
-python test_event_flow.py
 ```
 
 ## API Documentation
@@ -222,25 +192,6 @@ python test_event_flow.py
 | /api/v1/context/stats | GET | Get shared context information |
 | /simulate/task-creation | POST | Simulate task creation event flow |
 
-### Module Registration
-```bash
-POST /api/v1/modules/register
-Content-Type: application/json
-
-{
-  "name": "My AI Module",
-  "module_type": "chat",
-  "version": "1.0.0",
-  "description": "My smart module",
-  "endpoint": "https://my-module.com/webhook",
-  "capabilities": ["chat", "analysis"]
-}
-```
-
-### Pre-register Example Modules
-```bash
-POST /api/v1/modules/register-examples
-```
 
 ## Project Structure
 ```
@@ -267,12 +218,6 @@ intelligence-hub/
 ```
 
 ## Testing
-
-### Run Test Suite
-```bash
-# Run basic event flow test
-python test_event_flow.py
-
 
 ### Manual Testing
 
